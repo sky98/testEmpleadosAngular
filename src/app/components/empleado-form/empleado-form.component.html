@@ -1,109 +1,116 @@
 <div class="container">
+  <div class="headers" *ngIf="!editing">
     <nav class="navbar navbar-light bg-light">
-        <form class="container-fluid justify-content-start">
-          <h1>Crear empleado</h1>
-        </form>
+      <form class="container-fluid justify-content-start">
+        <h1>Agregar empleado</h1>
+      </form>
     </nav>
     <br>
     <div class="alert alert-primary" role="alert">
         Los campos con asteriscos (*) son obligatorios
-    </div>
-
-    <div class="contaier" style="margin-right: 40px; margin-left: 40px;">
-        <form>
-            <div class="mb-3 row">
-                <label for="nombre" class="col-sm-2 col-form-label" autocomplete="off"> <strong>Nombre completo *</strong></label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="nombre" autocomplete="off" name="nombre" onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode ==32' (keyup)="onkey(1, nombre.value )" #nombre required>
-                </div>
+    </div>    
+  </div>
+  <div class="headers" *ngIf="editing">
+    <nav class="navbar navbar-light bg-light">
+      <form class="container-fluid justify-content-start">
+        <h1>Editar empleado</h1>
+      </form>
+    </nav>
+    <br>
+  </div>   
+  <button class="btn btn-outline-primary me-2" routerLink="/" type="button">Regresar</button>
+  <br><br>
+  <div class="contaier" style="margin-right: 40px; margin-left: 40px;">
+    <form [formGroup]="form">
+      <div class="mb-3 row form-group">
+        <label for="nombre" class="col-sm-2 col-form-label" autocomplete="off"> <strong>Nombre completo *</strong></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="nombre" formControlName="nombre" autocomplete="off" name="nombre" onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode ==32' required placeholder="Nombre completo" (change)="changeInput()">
+        </div>
+      </div>
+      <br>
+      <div class="mb-3 row form-group">
+        <label for="email" class="col-sm-2 col-form-label" autocomplete="off"> <strong>Correo electrónico *</strong></label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control" formControlName="email" id="email" name="email" required autocomplete="off" placeholder="example@correo.com" (change)="changeInput()">
+        </div>
+      </div>
+      <br>
+      <fieldset class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-2 pt-0"><strong>Sexo *</strong></legend>
+          <div class="col-sm-10">
+            <div class="form-check">
+              <input class="form-check-input" (change)="changeInput()"  type="radio" name="gridRadios" id="masculino" [checked]="isSexo('M')" value="M" checked (click)="onkey(1, 'M')">
+              <label class="form-check-label" for="masculino">
+                Masculino
+              </label>
             </div>
-            <br>
-            <div class="mb-3 row">
-                <label for="email" class="col-sm-2 col-form-label" autocomplete="off"> <strong>Correo electrónico *</strong></label>
-                <div class="col-sm-10">
-                  <input type="email" class="form-control" id="email" name="email" required autocomplete="off" (keyup)="onkey(2, email.value )" #email >
-                </div>
+            <div class="form-check">
+              <input class="form-check-input" (change)="changeInput()" type="radio" name="gridRadios" id="femenino" [checked]="isSexo('F')" value="F" (click)="onkey(1, 'F')">
+              <label class="form-check-label" for="femenino">
+                Femenino
+              </label>
             </div>
-            <br>
-            <fieldset class="form-group">
-                <div class="row">
-                  <legend class="col-form-label col-sm-2 pt-0"><strong>Sexo *</strong></legend>
-                  <div class="col-sm-10">
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="masculino" value="M" checked (click)="onkey(3, 'M')">
-                      <label class="form-check-label" for="masculino">
-                        Masculino
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="femenino" value="F" (click)="onkey(3, 'F')">
-                      <label class="form-check-label" for="femenino">
-                        Femenino
-                      </label>
-                    </div>
-                  </div>
-                </div>
-            </fieldset>
-            <br>
-            <div class="row" appearance="fill">
-                <legend class="col-form-label col-sm-2 pt-0"><strong>Area *</strong></legend>
-                <div class="col-sm-10">
-                    <select name="area" id="area" (click)="onkey(4, area.value)" #area>
-                        <option *ngFor="let area of areas" [value]="area.id" >{{ area.nombre }}</option>
-                    </select>
-                </div>
+          </div>
+        </div>
+      </fieldset>
+      <br>
+      <div class="row form-group" appearance="fill">
+        <legend class="col-form-label col-sm-2 pt-0"><strong>Area *</strong></legend>
+        <div class="col-sm-10">
+          <select [(ngModel)]="selected" (change)="changeInput()" formControlName="area_id" name="area" id="area" (click)="onkey(2, area.value)" #area>
+            <option *ngFor="let area of areas" [value]="area.id" >{{ area.nombre }}</option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <div class="row form-group">
+        <legend class="col-form-label col-sm-2 pt-0"><strong>Descripción *</strong></legend>
+        <div class="col-sm-10">
+          <textarea class="form-control" (change)="changeInput()" formControlName="descripcion" rows="5" id="descripcion" required></textarea>
+        </div>
+      </div>
+      <br>
+      <div class="row justify-content-center form-group">
+        <div class="col-8">
+          <div class="form-check">
+            <input class="form-check-input" (change)="changeInput()" [checked]="empleado.boletin" type="checkbox" [value]="boletinValue" id="rol" (click)="onkey(3, boletin.value)" #boletin>
+            <label class="form-check-label" for="flexCheckDefault">
+              Deseo recibir boletin informativo
+             </label>
+          </div>
+        </div>                
+      </div>
+      <br>
+      <fieldset class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-2 pt-0"><strong>Roles *</strong></legend>
+          <div class="col-sm-10">
+            <div class="form-check" *ngFor="let rol of rolesResponse">
+              <input class="form-check-input" type="checkbox" [value]="rol.id" [checked]="isRol(rol.id)" (change)="onCheckChange($event)">
+              <label class="form-check-label" for="flexCheckDefault">
+                {{ rol.nombre }}
+              </label>
             </div>
-            <br>
-            <div class="row">
-                <legend class="col-form-label col-sm-2 pt-0"><strong>Descripción *</strong></legend>
-                <div class="col-sm-10">
-                    <textarea class="form-control" rows="5" id="descripcion" required (keyup)="onkey(6, descripcion.value)" #descripcion></textarea>
-                </div>
-            </div>
-            <br>
-            <div class="row justify-content-center">
-                <div class="col-8">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="1" id="rol" (click)="onkey(5, boletin.value)" #boletin>
-                        <label class="form-check-label" for="flexCheckDefault">
-                          Deseo recibir boletin informativo
-                        </label>
-                    </div>
-                </div>                
-            </div>
-            <br>
-            <fieldset class="form-group">
-                <div class="row">
-                  <legend class="col-form-label col-sm-2 pt-0"><strong>Roles *</strong></legend>
-                  <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="rol">
-                        <label class="form-check-label" for="flexCheckDefault">
-                          Profesional de proyectos - Desarrollador
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label" for="flexCheckChecked">
-                          Gerente estratégico
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label" for="flexCheckChecked">
-                          Auxiliar administrativo
-                        </label>
-                    </div>
-                  </div>
-                </div>
-            </fieldset>
-            <br>
-            <div class="row justify-content-center">
-                <div class="col-8">
-                    <button class="btn btn-outline-primary me-2" (click)="save()" type="button">Guardar</button>
-                </div>                
-            </div>
-        </form>
-    </div>
-
+          </div>
+        </div>
+      </fieldset>
+      <br>
+      <div class="row justify-content-center form-group">
+        <div class="alert alert-primary" role="alert" *ngIf="accionOK">
+          {{ messageOK }}
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="errorAccion">
+          {{ messageError }}
+        </div>
+        <div class="col-8" *ngIf="!editing">
+          <button class="btn btn-outline-primary me-2" [disabled]="form.invalid" *ngIf="isSelectRol()" (click)="save()" type="button">Guardar</button>
+        </div>   
+        <div class="col-8" *ngIf="editing">
+          <button class="btn btn-outline-primary me-2" [disabled]="!change" (click)="update()" type="button">Actualizar</button>
+        </div>             
+      </div>
+    </form>
+  </div>
 </div>

@@ -1,3 +1,5 @@
+import { Rol } from "./rol";
+
 export interface Empleado{
     id?: number;
     nombre: string;
@@ -7,4 +9,5 @@ export interface Empleado{
     area_id: number;
     boletin: number;
     descripcion: string;
+    roles?: Rol [];
 }

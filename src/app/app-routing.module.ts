@@ -7,7 +7,8 @@ import { EmpleadoIndexComponent } from './components/empleado-index/empleado-ind
 const routes: Routes = [
   { path: '', redirectTo: 'listar-empleados', pathMatch: 'full' },
   { path: 'listar-empleados', component: EmpleadoIndexComponent },
-  { path: 'crear-empleado', component: EmpleadoFormComponent },
+  { path: 'agregar-empleado', component: EmpleadoFormComponent },
+  { path: 'editar-empleado/:id', component: EmpleadoFormComponent },
 ];
 
 @NgModule({

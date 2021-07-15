@@ -6,7 +6,7 @@
 <br>
 <div class="container">
   <form>
-    <button class="btn btn-outline-success me-2" routerLink="/crear-empleado" type="button"><i class="fas fa-user-plus"></i> Crear</button>
+    <button class="btn btn-outline-success me-2" routerLink="/agregar-empleado" type="button"><i class="fas fa-user-plus"></i> Crear</button>
   </form>
   <br>
   <table class="table table-hover">
@@ -59,7 +59,7 @@
           No
         </td>
         <td>
-          <i class="fas fa-edit"></i>
+          <i class="fas fa-edit" routerLink="/editar-empleado/{{ empleado.id }}"></i>
         </td>
         <td>
           <i class="fas fa-trash-alt" (click)="delete(empleado)"></i>

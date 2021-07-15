@@ -9,8 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmpleadoFormComponent } from './components/empleado-form/empleado-form.component';
 import { EmpleadoIndexComponent } from './components/empleado-index/empleado-index.component';
 
-import { matSnackBarAnimations, MatSnackBarModule } from '@angular/material/snack-bar';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,11 +20,7 @@ import { matSnackBarAnimations, MatSnackBarModule } from '@angular/material/snac
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatSnackBarModule,
     BrowserAnimationsModule
-  ],
-  exports: [
-    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
